@@ -6,11 +6,17 @@ A simple, lightweight, terminal-based password manager built in C, using XOR enc
 
 Features:
 💠Add credentials (site, username, password)
+
 💠View all stored credentials with decrypted passwords
+
 💠Remove credentials by site
+
 💠XOR-based encryption (safe, fun, and easy to understand)
+
 💠Simple, interactive menu in the terminal
+
 💠Works on Windows (and easily on Linux!)
+
 
 Getting Started:
 Requirements:
