@@ -7,6 +7,7 @@
 
 
 void saveCredential(Credential cred){
+
     xorEncryptDecrypt(cred.password,KEY);
     FILE *file=fopen("vault.dat","ab+");
     if(!file){
@@ -15,6 +16,7 @@ void saveCredential(Credential cred){
     }
     fwrite(&cred,sizeof(Credential),1,file);
     fclose(file);
+    cred.passwordLength=strlen(cred.password);
     xorEncryptDecrypt(cred.password,KEY);
     printf("Credential saved!\n");
     
@@ -29,7 +31,7 @@ void viewCredential(){
     Credential cred;
     while(fread(&cred,sizeof(Credential),1,file)){
         xorEncryptDecrypt(cred.password,KEY);
-        printf("\nSite: %s\nUsername: %s\nPassword: %s\n",cred.site,cred.username,cred.password);
+        printf("\nSite: %s\nUsername: %s\nPassword: %*s\n",cred.site,cred.username,cred.passwordLength,cred.password);
     }
     fclose(file);
 }
