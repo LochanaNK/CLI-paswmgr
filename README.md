@@ -1,5 +1,6 @@
 🛡️ CLI Password Manager
 
+
 Welcome to my CLI Password Manager! 🎉
 
 A simple, lightweight, terminal-based password manager built in C, using XOR encryption to keep your credentials safe. Perfect for learning C, file handling, and basic encryption — and yes, it actually works! 😎
