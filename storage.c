@@ -32,6 +32,10 @@ void viewCredential(){
     while(fread(&cred,sizeof(Credential),1,file)){
         xorEncryptDecrypt(cred.password,KEY);
         printf("\nSite: %s\nUsername: %s\nPassword: %*s\n",cred.site,cred.username,cred.passwordLength,cred.password);
+        for(int i = 0; i < cred.passwordLength; i++){
+            putchar(cred.password[i]);
+        }
+        printf("\n");
     }
     fclose(file);
 }
