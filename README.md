@@ -1,55 +1,52 @@
-🛡️ CLI Password Manager
+<h1 align="center">
+  <br>
+  <br>
+  CLI-based Password Manager
+  <br>
+</h1>
+
+<h4 align="center">
+A lightweight, terminal-based password manager built in C, featuring XOR encryption to safely store your credentials.
+</h4>
+
+<p align="center">
+  <a href="https://img.shields.io/badge/C-Program-blue?style=for-the-badge&logo=c&logoColor=white"></a>
+  <a href="https://img.shields.io/badge/Windows%20Ready-success?style=for-the-badge"></a>
+  <a href="https://img.shields.io/badge/XOR%20Encryption-yellow?style=for-the-badge"></a>
+</p>
 
 
-Welcome to my CLI Password Manager! 🎉
+---
 
-A simple, lightweight, terminal-based password manager built in C, using XOR encryption to keep your credentials safe. Perfect for learning C, file handling, and basic encryption — and yes, it actually works! 😎
+## Key Features
 
-Features:
+* 📝 **Add Credentials** – Store site, username, and password.  
+* 🔍 **View Credentials** – See all saved credentials with decrypted passwords.  
+* ❌ **Remove Credentials** – Delete credentials by site name.  
+* 🔐 **XOR-based Encryption** – Simple and safe for learning purposes.  
+* 🎛️ **Interactive CLI Menu** – Easy-to-use terminal interface.  
+* 💻 **Cross-platform Friendly** – Works on Windows and Linux.  
 
-💠Add credentials (site, username, password)
+---
 
-💠View all stored credentials with decrypted passwords
+## How To Use
 
-💠Remove credentials by site
+### Requirements
 
-💠XOR-based encryption (safe, fun, and easy to understand)
+* GCC compiler (or any C compiler)  
+* Windows Terminal / Command Prompt or Linux Terminal  
 
-💠Simple, interactive menu in the terminal
+### Compile and Run
 
-💠Works on Windows (and easily on Linux!)
+**Using Makefile (Recommended):**
 
-
-Getting Started:
-
-Requirements:
-
-GCC compiler (or any C compiler)
-
-Windows Terminal / Command Prompt or Linux Terminal
-
-
-Compile and Run:
-
-Option 1: Using Makefile (Recommended)
-
-
+```bash
 make        # builds the program
 make clean  # removes exe, object files, and vault.dat
+```
 
-Option 2: Compile manually
+**Manual compilation:**
 
+```bash
 gcc main.c storage.c crypto.c -o password_manager.exe
 password_manager.exe
-
-Using the Program:
-
-💠Add Credential: Enter site, username, and password.
-
-💠View Credentials: See all stored credentials decrypted safely.
-
-💠Remove Credential: Delete a credential by specifying the site.
-
-💠Exit: Close the program.
-
-💠Pro tip: Passwords are XOR-encrypted in vault.dat, so they’re not stored in plain text. 🔐
