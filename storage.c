@@ -21,7 +21,7 @@ void saveCredential(Credential cred){
 }
 
 void viewCredential(){
-    FILE *file=fope("vault.dat","rb");
+    FILE *file=fopen("vault.dat","rb");
     if(!file){
         printf("No credentials found.\n");
         return;
