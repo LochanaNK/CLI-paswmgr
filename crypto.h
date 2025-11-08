@@ -1,6 +1,7 @@
 #ifndef CRYPTO_H
 #define CRYPTO_H
 
-void xorEncryptDecrypt(char *str, char key);
+
+void xorEncryptDecrypt(char *str, char key, int length);
 
 #endif

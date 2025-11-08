@@ -1,13 +1,16 @@
 #ifndef STORAGE_H
 #define STORAGE_H
 
-typedef struct{
-    char site[50];
-    char username[50];
-    char password[50];
-    int passwordLength;
-}Credential;
+#define MAX_LEN 50
 
+typedef struct {
+    char site[MAX_LEN];
+    char username[MAX_LEN];
+    char password[MAX_LEN];
+    int passwordLength;
+} Credential;
+
+// Storage functions
 void saveCredential(Credential cred);
 void viewCredential();
 void removeCredential(const char *site);
