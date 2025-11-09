@@ -3,7 +3,7 @@
 #include "storage.h"
 #include "crypto.h"
 
-#define KEY 'K'   // XOR key
+#define KEY "clipaswmgr"   // XOR key
 
 // Save a credential to vault.dat
 void saveCredential(Credential cred) {
@@ -11,21 +11,21 @@ void saveCredential(Credential cred) {
     xorEncryptDecrypt(cred.password, KEY,cred.passwordLength);
     FILE *file = fopen("vault.dat", "ab+");
     if (!file) {
-        printf("Error opening vault.dat\n");
+        printf("\nError opening vault.dat\n");
         return;
     }
 
     fwrite(&cred, sizeof(Credential), 1, file);
     fclose(file);
     xorEncryptDecrypt(cred.password, KEY,cred.passwordLength);
-    printf("Credential saved!\n");
+    printf("\nCredential saved!\n");
 }
 
 
 void viewCredential() {
     FILE *file = fopen("vault.dat", "rb");
     if (!file) {
-        printf("No credentials found.\n");
+        printf("\nNo credentials found.\n");
         return;
     }
 
@@ -46,13 +46,13 @@ void viewCredential() {
 void removeCredential(const char *site) {
     FILE *file = fopen("vault.dat", "rb");
     if (!file) {
-        printf("No credentials saved yet.\n");
+        printf("\nNo credentials saved yet.\n");
         return;
     }
 
     FILE *temp = fopen("temp.dat", "wb");
     if (!temp) {
-        printf("Error creating temporary file.\n");
+        printf("\nError creating temporary file.\n");
         fclose(file);
         return;
     }
@@ -75,16 +75,16 @@ void removeCredential(const char *site) {
     fclose(temp);
 
     if (remove("vault.dat") != 0) {
-        printf("Error deleting original vault file.\n");
+        printf("\nError deleting original vault file.\n");
         return;
     }
     if (rename("temp.dat", "vault.dat") != 0) {
-        printf("Error renaming temp file.\n");
+        printf("\nError renaming temp file.\n");
         return;
     }
     if (found) {
-        printf("Credential for '%s' removed.\n", site);
+        printf("\nCredential for '%s' removed.\n", site);
     } else {
-        printf("No credentials found for '%s'.\n", site);
+        printf("\nNo credentials found for '%s'.\n", site);
     }
 }
