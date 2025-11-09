@@ -25,7 +25,8 @@ A lightweight, terminal-based password manager built in C, featuring XOR encrypt
 * ❌ **Remove Credentials** – Delete credentials by site name.  
 * 🔐 **XOR-based Encryption** – Simple and safe for learning purposes.  
 * 🎛️ **Interactive CLI Menu** – Easy-to-use terminal interface.  
-* 💻 **Cross-platform Friendly** – Works on Windows and Linux.  
+* 💻 **Cross-platform Friendly** – Works on Windows and Linux.
+* 🔑 **Random Generated Key** - Randomly generated 32character key for encryption and decryption
 
 ---
 
