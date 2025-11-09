@@ -11,8 +11,8 @@ typedef struct {
 } Credential;
 
 // Storage functions
-void saveCredential(Credential cred);
-void viewCredential();
-void removeCredential(const char *site);
+void saveCredential(Credential cred,const char *key,int keyLen);
+void viewCredential(const char *key,int keyLen);
+void removeCredential(const char *site,const char *key,int keyLen);
 
 #endif

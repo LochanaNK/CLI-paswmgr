@@ -3,12 +3,11 @@
 #include "storage.h"
 #include "crypto.h"
 
-#define KEY "clipaswmgr"   // XOR key
 
 // Save a credential to vault.dat
-void saveCredential(Credential cred) {
+void saveCredential(Credential cred,const char *key,int keyLen) {
     cred.passwordLength = strlen(cred.password);
-    xorEncryptDecrypt(cred.password, KEY,cred.passwordLength);
+    xorEncryptDecrypt(cred.password, key,cred.passwordLength);
     FILE *file = fopen("vault.dat", "ab+");
     if (!file) {
         printf("\nError opening vault.dat\n");
@@ -17,12 +16,12 @@ void saveCredential(Credential cred) {
 
     fwrite(&cred, sizeof(Credential), 1, file);
     fclose(file);
-    xorEncryptDecrypt(cred.password, KEY,cred.passwordLength);
+    xorEncryptDecrypt(cred.password, key,cred.passwordLength);
     printf("\nCredential saved!\n");
 }
 
 
-void viewCredential() {
+void viewCredential(const char *key,int keyLen) {
     FILE *file = fopen("vault.dat", "rb");
     if (!file) {
         printf("\nNo credentials found.\n");
@@ -31,7 +30,7 @@ void viewCredential() {
 
     Credential cred;
     while (fread(&cred, sizeof(Credential), 1, file)) {
-        xorEncryptDecrypt(cred.password, KEY,cred.passwordLength);
+        xorEncryptDecrypt(cred.password, key,cred.passwordLength);
 
         printf("\n\n\n\nSite: %s\nUsername: %s\nPassword: ", cred.site, cred.username);
         for (int i = 0; i < cred.passwordLength; i++) {
@@ -43,7 +42,7 @@ void viewCredential() {
     fclose(file);
 }
 
-void removeCredential(const char *site) {
+void removeCredential(const char *site,const char *key,int keyLen) {
     FILE *file = fopen("vault.dat", "rb");
     if (!file) {
         printf("\nNo credentials saved yet.\n");
@@ -61,10 +60,10 @@ void removeCredential(const char *site) {
     int found = 0;
 
     while (fread(&cred, sizeof(Credential), 1, file)) {
-        xorEncryptDecrypt(cred.password, KEY,cred.passwordLength);
+        xorEncryptDecrypt(cred.password, key,cred.passwordLength);
 
         if (strcmp(cred.site, site) != 0) {
-            xorEncryptDecrypt(cred.password, KEY,cred.passwordLength);
+            xorEncryptDecrypt(cred.password, key,cred.passwordLength);
             fwrite(&cred, sizeof(Credential), 1, temp);
         } else {
             found = 1;

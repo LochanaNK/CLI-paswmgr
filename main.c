@@ -1,8 +1,17 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
+#include <time.h>
 #include "storage.h"
+#include "keygen.h"
 
 int main(){
+    srand(time(NULL));
+    char key[33];
+    generateRandomKey(key ,sizeof(key));
+    printf("session key %s\n",key);
+    printf("size %d\n",strlen(key));
+
     char master[20];
     char site[50];
     Credential cred;
@@ -27,17 +36,17 @@ int main(){
                 scanf("%s", cred.username);
                 printf("Enter password: ");
                 scanf("%s", cred.password);
-                saveCredential(cred);
+                saveCredential(cred,key,strlen(key));
                 break;
 
             case 2: // View
-                viewCredential();
+                viewCredential(key,strlen(key));
                 break;
 
             case 3: // Remove
                 printf("Enter site to remove: ");
                 scanf("%s", site);
-                removeCredential(site);
+                removeCredential(site,key,strlen(key));
                 break;
 
             case 4: // Exit

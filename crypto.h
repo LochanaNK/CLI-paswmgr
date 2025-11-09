@@ -2,6 +2,6 @@
 #define CRYPTO_H
 
 
-void xorEncryptDecrypt(char *str, char *key, int length);
+void xorEncryptDecrypt(char *str,const char *key, int length);
 
 #endif

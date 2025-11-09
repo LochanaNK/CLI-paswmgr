@@ -3,7 +3,7 @@ CC = gcc
 CFLAGS = -Wall -g
 
 # Files
-SRC = main.c storage.c crypto.c
+SRC = main.c storage.c crypto.c keygen.c
 OBJ = $(SRC:.c=.o)
 TARGET = password_manager.exe
 
