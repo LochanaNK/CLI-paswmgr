@@ -5,48 +5,51 @@
 #include "storage.h"
 #include "keygen.h"
 
-int main(){
-    srand(time(NULL));
-    char key[33];
-    generateRandomKey(key ,sizeof(key));
-    printf("session key %s\n",key);
-    printf("size %d\n",strlen(key));
+int main() {
+    srand(time(NULL));  // seed RNG once
 
     char master[20];
     char site[50];
     Credential cred;
     int option;
+
     printf("Enter master password: ");
-    scanf("%s",master);
-    if(strcmp(master,"admin123")!=0){
+    scanf("%s", master);
+
+    if (strcmp(master, "admin123") != 0) {
         printf("Access denied!\n");
         return 0;
     }
 
-     while (1) {
+    while (1) {
         printf("\n--- Password Manager ---\n");
         printf("1. Add Credential\n2. View Credentials\n3. Remove Credential\n4. Exit\nEnter choice: ");
         scanf("%d", &option);
 
         switch (option) {
-            case 1: // Add
+            case 1: { // Add
                 printf("Enter site: ");
                 scanf("%s", cred.site);
                 printf("Enter username: ");
                 scanf("%s", cred.username);
                 printf("Enter password: ");
                 scanf("%s", cred.password);
-                saveCredential(cred,key,strlen(key));
+
+                char key[33];
+                generateRandomKey(key, sizeof(key));
+
+                saveCredential(cred, key, strlen(key));
                 break;
+            }
 
             case 2: // View
-                viewCredential(key,strlen(key));
+                viewCredential(NULL, 0);
                 break;
 
             case 3: // Remove
                 printf("Enter site to remove: ");
                 scanf("%s", site);
-                removeCredential(site,key,strlen(key));
+                removeCredential(site, NULL, 0);
                 break;
 
             case 4: // Exit

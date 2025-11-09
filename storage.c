@@ -2,12 +2,13 @@
 #include <string.h>
 #include "storage.h"
 #include "crypto.h"
+#include "keygen.h"
 
-
-// Save a credential to vault.dat
-void saveCredential(Credential cred,const char *key,int keyLen) {
+void saveCredential(Credential cred, const char *key, int keyLen) {
+    strcpy(cred.key, key);
     cred.passwordLength = strlen(cred.password);
-    xorEncryptDecrypt(cred.password, key,cred.passwordLength);
+    xorEncryptDecrypt(cred.password, cred.key, cred.passwordLength, keyLen);
+
     FILE *file = fopen("vault.dat", "ab+");
     if (!file) {
         printf("\nError opening vault.dat\n");
@@ -16,12 +17,11 @@ void saveCredential(Credential cred,const char *key,int keyLen) {
 
     fwrite(&cred, sizeof(Credential), 1, file);
     fclose(file);
-    xorEncryptDecrypt(cred.password, key,cred.passwordLength);
+
     printf("\nCredential saved!\n");
 }
 
-
-void viewCredential(const char *key,int keyLen) {
+void viewCredential(const char *key, int keyLen) {
     FILE *file = fopen("vault.dat", "rb");
     if (!file) {
         printf("\nNo credentials found.\n");
@@ -30,19 +30,18 @@ void viewCredential(const char *key,int keyLen) {
 
     Credential cred;
     while (fread(&cred, sizeof(Credential), 1, file)) {
-        xorEncryptDecrypt(cred.password, key,cred.passwordLength);
+        xorEncryptDecrypt(cred.password, cred.key, cred.passwordLength, strlen(cred.key));
 
-        printf("\n\n\n\nSite: %s\nUsername: %s\nPassword: ", cred.site, cred.username);
-        for (int i = 0; i < cred.passwordLength; i++) {
-            putchar(cred.password[i]);
-        }
-        printf("\n\n\n\n");
+        printf("\nSite: %s\nUsername: %s\nPassword: %s\n", 
+               cred.site, cred.username, cred.password);
+
+        xorEncryptDecrypt(cred.password, cred.key, cred.passwordLength, strlen(cred.key));
     }
 
     fclose(file);
 }
 
-void removeCredential(const char *site,const char *key,int keyLen) {
+void removeCredential(const char *site, const char *key, int keyLen) {
     FILE *file = fopen("vault.dat", "rb");
     if (!file) {
         printf("\nNo credentials saved yet.\n");
@@ -60,10 +59,10 @@ void removeCredential(const char *site,const char *key,int keyLen) {
     int found = 0;
 
     while (fread(&cred, sizeof(Credential), 1, file)) {
-        xorEncryptDecrypt(cred.password, key,cred.passwordLength);
+        xorEncryptDecrypt(cred.password, cred.key, cred.passwordLength, strlen(cred.key));
 
         if (strcmp(cred.site, site) != 0) {
-            xorEncryptDecrypt(cred.password, key,cred.passwordLength);
+            xorEncryptDecrypt(cred.password, cred.key, cred.passwordLength, strlen(cred.key));
             fwrite(&cred, sizeof(Credential), 1, temp);
         } else {
             found = 1;
@@ -81,9 +80,9 @@ void removeCredential(const char *site,const char *key,int keyLen) {
         printf("\nError renaming temp file.\n");
         return;
     }
-    if (found) {
+
+    if (found)
         printf("\nCredential for '%s' removed.\n", site);
-    } else {
+    else
         printf("\nNo credentials found for '%s'.\n", site);
-    }
 }

@@ -7,6 +7,7 @@ typedef struct {
     char site[MAX_LEN];
     char username[MAX_LEN];
     char password[MAX_LEN];
+    char key[33];
     int passwordLength;
 } Credential;
 

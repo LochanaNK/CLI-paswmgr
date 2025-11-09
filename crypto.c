@@ -1,11 +1,11 @@
 #include <string.h>
 #include "crypto.h"
 
-
-void xorEncryptDecrypt(char *str,const char *key, int length) {
-    int keyLen = strlen(key);
-
-    for (int i = 0; i < length; i++) {
-        str[i] ^= key[i % keyLen];
+// XOR encryption/decryption using a variable-length key
+void xorEncryptDecrypt(char *data, const char *key, int dataLen, int keyLen) {
+    for (int i = 0; i < dataLen; i++) {
+        data[i] ^= key[i % keyLen];
     }
 }
+
+
